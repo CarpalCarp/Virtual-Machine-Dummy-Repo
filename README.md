@@ -14,86 +14,86 @@ Do a second pass read of the file and place the corresponding bytes in memory. E
 
 ## Execute the bytes in memory
 The VM uses an array of size 12 for registers. R0-R7 are used as space for the assembly operations. R8-R12 are used as special pointer arrays.
-R8 which is the Program Counter is incremented by 12 which is the size of an instruction and is used to keep track of the next instruction to run in memory. The program will run until a TRP 0 is read and then terminates.
+R8 which is the Program Counter is incremented by 12 which is the size of an instruction and is used to keep track of the next instruction to run in memory. The program will run until a TRP 0 is read and then terminates.<br />
 R9 is a pointer to the stack limit. SP is a stack pointer. FP is a frame pointer and SB is a pointer to the base or end of memory. These pointers are used for functions in the stack area of memory.
 
 ## Supported assembly instructions
-An assembly instruction is written in the form of:
-<optional label> <instruction> <operand one> <operand two>
+An assembly instruction is written in the form of:<br />
+<optional label> <instruction> <operand one> <operand two><br />
 
-Directives which are written as data segment are written as:
-<label> <.INT or .BYT> <ascii number>
-Note: in the Browser VM I made, it supports both ascii numbers and characters to initialize labels
+Directives which are written as data segment are written as:<br />
+<label> <.INT or .BYT> <ascii number><br />
+Note: in the Browser VM I made, it supports both ascii numbers and characters to initialize labels<br />
 
-Legend:
-RS = Source Register
-RD = Destination Register
-RG = Register location
-IMM = Immediate value
+Legend:<br />
+RS = Source Register<br />
+RD = Destination Register<br />
+RG = Register location<br />
+IMM = Immediate value<br />
 
-Instructions:
-(Jump instructions)
-JMP - Branch to label
-JMR - Branch to address in source register
-BNZ - Branch to label if source register is not zero	RS, Label
-BGT - Branch to label if source register is greater than zero	RS, Label
-BLT - Branch to label if source register is less than zero		RS, Label
-BRZ - Branch to label if source register is zero		RS, Label
+Instructions:<br />
+(Jump instructions)<br />
+JMP - Branch to label<br />
+JMR - Branch to address in source register<br />
+BNZ - Branch to label if source register is not zero	RS, Label<br />
+BGT - Branch to label if source register is greater than zero	RS, Label<br />
+BLT - Branch to label if source register is less than zero		RS, Label<br />
+BRZ - Branch to label if source register is zero		RS, Label<br />
 
-(Addressing instructions)
-LDA - Load the Address of the label into the RD register.		RD, Label
-STR - Store data into Mem from source register		RS, Label
-STR indirect - STR Store data at register location from source register		RS, RG
-STB - Store byte into Mem from source register		RS, Label
-STB indirect - Store byte at register location from source register		RS, RG
-LDR - Load destination register with data from Mem	RD, Label
-LDR indirect - Load destination register with data at register location		RD, RG
-LDB - Load destination register with byte from Mem	RD, Label
-LDB indirect - Load destination register with byte at register location		RD, RG
+(Addressing instructions)<br />
+LDA - Load the Address of the label into the RD register.		RD, Label<br />
+STR - Store data into Mem from source register		RS, Label<br />
+STR indirect - STR Store data at register location from source register		RS, RG<br />
+STB - Store byte into Mem from source register		RS, Label<br />
+STB indirect - Store byte at register location from source register		RS, RG<br />
+LDR - Load destination register with data from Mem	RD, Label<br />
+LDR indirect - Load destination register with data at register location		RD, RG<br />
+LDB - Load destination register with byte from Mem	RD, Label<br />
+LDB indirect - Load destination register with byte at register location		RD, RG<br />
 
-MOV - Move data from source register to destination register	RD, RS
-ADI - Add immediate data to destination register		RD, IMM
-ADD - Add source register to destination register, result in destination register		RD, RS
-SUB - Subtract source register from destination register, result in destination register		RD, RS
-MUL - Multiply source register by destination register, result in destination register		RD, RS
-DIV - Divide destination register by source register, result in destination register		RD, RS
-CMP - Set destination register to zero if destination is equal to source		RD, RS
-	  Set destination register to greater than zero if destination is greater than source;
-	  Set destination register to less than zero if destination is less than source
+MOV - Move data from source register to destination register	RD, RS<br />
+ADI - Add immediate data to destination register		RD, IMM<br />
+ADD - Add source register to destination register, result in destination register		RD, RS<br />
+SUB - Subtract source register from destination register, result in destination register		RD, RS<br />
+MUL - Multiply source register by destination register, result in destination register		RD, RS<br />
+DIV - Divide destination register by source register, result in destination register		RD, RS<br />
+CMP - Set destination register to zero if destination is equal to source		RD, RS<br />
+	  Set destination register to greater than zero if destination is greater than source;<br />
+	  Set destination register to less than zero if destination is less than source<br />
 
-Logical Instructions OR and AND are not supported
+Logical Instructions OR and AND are not supported<br />
 
-TRP 0 - Terminate program
-TRP 1 - Write an int to console
-TRP 2 - Read an int from console
-TRP 3 - Write a byte (in this case characters) to console
-TRP 4 - Read a byte from console
-TRP 99 - Used as a break point for debugging.
+TRP 0 - Terminate program<br />
+TRP 1 - Write an int to console<br />
+TRP 2 - Read an int from console<br />
+TRP 3 - Write a byte (in this case characters) to console<br />
+TRP 4 - Read a byte from console<br />
+TRP 99 - Used as a break point for debugging.<br />
 
 ## Directives
-.INT value Allocate space for an integer.
-		Example:
-			MONTH .INT 12
-			DAY .INT 9
-			YEAR .INT 2005
-			STUFF .INT 9
-			.INT 17
-			.INT 42
-			.INT 53
+.INT value Allocate space for an integer.<br />
+		Example:<br />
+			MONTH .INT 12<br />
+			DAY .INT 9<br />
+			YEAR .INT 2005<br />
+			STUFF .INT 9<br />
+			.INT 17<br />
+			.INT 42<br />
+			.INT 53<br />
 
-.BYT value Allocate space for one byte.
-		Example:
-			N .BYT 78 # Use the ascii code
-			A .BYT 65
-			M .BYT 77
-			E .BYT 69
-			LETTER_A .BYT ‘A’ # Or use the character. My Browser VM only supports this since it will accept either ascii code or the character
-			SCHOOL .BYT ‘U’
-			.BYT ‘V’
-			.BYT ‘U’
+.BYT value Allocate space for one byte.<br />
+		Example:<br />
+			N .BYT 78 # Use the ascii code<br />
+			A .BYT 65<br />
+			M .BYT 77<br />
+			E .BYT 69<br />
+			LETTER_A .BYT ‘A’ # Or use the character. My Browser VM only supports this since it will accept either ascii code or the character<br />
+			SCHOOL .BYT ‘U’<br />
+			.BYT ‘V’<br />
+			.BYT ‘U’<br />
 
-.ALN is not supported
+.ALN is not supported<br />
 
 ## Registers supported
-R[0…7] General purpose integer registers named R0 through R7 0, 1, 2, 3, 4, 5, 6, 7
-PC Program Counter, can't move a value into this register from a MOV instruction but you can copy its value to another register.
+R[0…7] General purpose integer registers named R0 through R7 0, 1, 2, 3, 4, 5, 6, 7<br />
+PC Program Counter, can't move a value into this register from a MOV instruction but you can copy its value to another register.<br />
