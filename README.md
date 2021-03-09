@@ -96,4 +96,8 @@ TRP 99 - Used as a break point for debugging.<br />
 
 ## Registers supported
 R[0…7] General purpose integer registers named R0 through R7 0, 1, 2, 3, 4, 5, 6, 7<br />
-PC Program Counter, can't move a value into this register from a MOV instruction but you can copy its value to another register.<br />
+R8 = PC Program Counter, can't move a value into this register from a MOV instruction but you can copy its value to another register.<br />
+R9 is a pointer to the stack limit or SL.<br />
+R10 = SP is a stack pointer.<br />
+R11 = FP is a frame pointer.<br />
+R12 = SB is a pointer to the base or end of memory.<br />
