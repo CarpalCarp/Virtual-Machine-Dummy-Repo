@@ -101,3 +101,13 @@ R9 is a pointer to the stack limit or SL.<br />
 R10 = SP is a stack pointer.<br />
 R11 = FP is a frame pointer.<br />
 R12 = SB is a pointer to the base or end of memory.<br />
+
+## Some examples of VM running:
+HelloWorld.asm
+![GitHub Logo](Screenshots/HelloWorldEx.PNG)
+
+TypeChecker.asm
+![GitHub Logo](Screenshots/TypeCheckerEx.PNG)
+
+whatIsYourName.asm
+![GitHub Logo](Screenshots/whatIsYourNameEx.PNG)
